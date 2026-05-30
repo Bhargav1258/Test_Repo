@@ -1,7 +1,12 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JDK21'
+    }
+
     stages {
+
         stage('Check Java') {
             steps {
                 bat 'java -version'
