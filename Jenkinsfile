@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'JDK21'
+    }
+
     stages {
         stage('Build and Test') {
             steps {
@@ -11,9 +15,7 @@ pipeline {
 
     post {
         always {
-            publishTestNGResults(
-                testResultsPattern: 'test-output/testng-results.xml'
-            )
+            junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
         }
     }
 }
