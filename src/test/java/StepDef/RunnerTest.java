@@ -17,5 +17,5 @@ import io.cucumber.testng.CucumberOptions;
         monochrome = true,
         dryRun = false
 )
-public class TestRunner extends AbstractTestNGCucumberTests {
+public class RunnerTest extends AbstractTestNGCucumberTests {
 }
