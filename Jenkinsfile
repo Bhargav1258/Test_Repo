@@ -1,21 +1,48 @@
 pipeline {
-    agent any
+agent any
 
-    tools {
-        jdk 'JDK21'
-    }
 
-    stages {
-        stage('Build and Test') {
-            steps {
-                bat 'mvn clean test'
-            }
+tools {
+    jdk 'JDK21'
+}
+
+stages {
+
+    stage('Checkout') {
+        steps {
+            git branch: 'regression',
+                url: 'https://github.com/Bhargav1258/Test_Repo.git'
         }
     }
 
-    post {
-        always {
-            junit allowEmptyResults: true, testResults: '**/surefire-reports/*.xml'
+    stage('Build and Test') {
+        steps {
+            bat 'mvn clean test'
         }
     }
+
+    stage('Publish Results') {
+        steps {
+            junit allowEmptyResults: true,
+            testResults: '**/surefire-reports/*.xml'
+        }
+    }
+}
+
+post {
+
+    success {
+        echo 'Build Successful'
+    }
+
+    failure {
+        echo 'Build Failed'
+    }
+
+    always {
+        echo 'Pipeline Execution Completed'
+    }
+}
+
+
 }
